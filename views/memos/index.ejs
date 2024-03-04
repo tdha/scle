@@ -7,7 +7,7 @@
     <p><%= m.formattedDate %></p>
     <p><%= m.location %></p>
     <p><%= m.note %></p>
-    <img src="<%= memo.image %>" alt="uploaded image">
+    <img src="<%= m.image %>" alt="uploaded image">
     <form action="/memos/<%= m._id %>/edit" method="GET">
         <button type="submit">Edit</button>
     </form>

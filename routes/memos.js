@@ -12,7 +12,7 @@ router.get('/', memosController.index);
 router.get('/new', memosController.new);
 
 // POST memo entry from form
-router.post('/', memosController.create);
+// router.post('/', memosController.create);
 
 // cloudinary (and require multer)
 router.post('/', upload.single('image'), memosController.create);
