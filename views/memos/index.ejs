@@ -7,7 +7,9 @@
     <p><%= m.formattedDate %></p>
     <p><%= m.location %></p>
     <p><%= m.note %></p>
-    <img src="<%= m.image %>" alt="uploaded image">
+    <% if (m.image && m.image !== 'defaultImageURLHere') { %>
+        <img src="<%= m.image %>" alt="uploaded image">
+    <% } %>
     <form action="/memos/<%= m._id %>/edit" method="GET">
         <button type="submit">Edit</button>
     </form>

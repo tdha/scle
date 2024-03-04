@@ -6,7 +6,7 @@ const index = async(req, res) => {
     try {
         const memos = await Memo.find({});
         const formattedMemos = memos.map(memo => {
-            const formattedMemo = memo.toObject(); // Convert Mongoose document to a plain JavaScript object
+            const formattedMemo = memo.toObject(); 
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
             return formattedMemo;
         });
@@ -19,28 +19,37 @@ const index = async(req, res) => {
 }
 
 const newMemo = (req, res) => {
-    res.render('memos/new', {errorMessage: ''});
-}
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(now - timezoneOffset)).toISOString().split('T')[0];
+    
+    res.render('memos/new', { errorMessage: '', today: localISOTime });
+};
 
-// cloudlinary
+
 const create = async(req, res) => {
     try {
-        const result = await cloudinary.uploader.upload(req.file.path);
-        console.log(result);
-        // await Memo.create(req.body);
+        let imageUploadResult = {};
+        if (req.file) { 
+            imageUploadResult = await cloudinary.uploader.upload(req.file.path);
+        }
+        
+        const imageUrl = imageUploadResult.secure_url || 'defaultImageURLHere'; 
+        const cloudinaryId = imageUploadResult.public_id || ''; 
+        
         const memo = new Memo({
-            ...req.body,
-            image: result.secure_url,
-            cloudinary_id: result.public_id
-        })
+            ...req.body, 
+            image: imageUrl,
+            cloudinary_id: cloudinaryId
+        });
+
         await memo.save();
-        // res.redirect(`/memos/${memo._id}`);
         res.redirect('/memos');
     } catch (err) {
         console.log(err);
         res.render('memos/new', { errorMessage: err.message });
     }
-}
+};
 
 const editMemo = async(req, res) => {
     try {
@@ -59,7 +68,6 @@ const update = async(req, res) => {
         res.redirect('/memos');
     } catch (err) {
         console.log(err);
-        // if error, show edit form with entered info and error
         res.render('memos/edit', { memo: { ...req.body, _id: id}, errorMessage: err.message });
     }
 }

@@ -4,7 +4,7 @@
 
 <form action="/memos" enctype="multipart/form-data" method="POST">
     <label>Date</label>
-    <input type="date" name="date" value="<%= new Date().toISOString().split('T')[0] %>">
+    <input type="date" name="date" value="<%= today %>">
     <label>Location</label>
     <input type="text" name="location">
     <label>Note</label>
