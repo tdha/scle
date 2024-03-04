@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+<h1>Contacts</h1>
+
+<section>
+<% contacts.forEach(function(c) { %>
+    <% if (c.names && c.names.length > 0) { %>
+        <p>Name: <%= c.names[0].givenName %> <%= c.names[0].familyName %></p>
+    <% } else { %>
+        <p>No Name</p>
+    <% } %>
+
+    <% if (c.emailAddresses && c.emailAddresses.length > 0) { %>
+        <p>Email: <%= c.emailAddresses[0].value %> (<%= c.emailAddresses[0].type %>)</p>
+    <% } else { %>
+        <p>No Email</p>
+    <% } %>
+
+    <% if (c.phoneNumbers && c.phoneNumbers.length > 0) { %>
+        <p>Phone: <%= c.phoneNumbers[0].value %> (<%= c.phoneNumbers[0].type %>)</p>
+    <% } else { %>
+        <p>No Phone Number</p>
+    <% } %>
+
+    <form action="/contacts/<%= c._id %>/edit" method="GET">
+        <button type="submit">Edit</button>
+    </form>
+    <hr>
+<% }); %>
+</section>
+
+<%- include('../partials/footer') %>
