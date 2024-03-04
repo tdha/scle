@@ -12,6 +12,14 @@ const memoSchema = new Schema({
         type: String,
         required: true
     },
+    // cloudinary
+    image: {
+        type: String
+    },
+    // cloudinary
+    cloudinary_id: {
+        type: String
+    }
 }, {
     timestamps: true
 });

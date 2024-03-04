@@ -1,4 +1,6 @@
 const Memo = require('../models/memo');
+// cloudinary
+const cloudinary = require('../utilities/cloudinary');
 
 const index = async(req, res) => {
     try {
@@ -20,10 +22,28 @@ const newMemo = (req, res) => {
     res.render('memos/new', {errorMessage: ''});
 }
 
+// const create = async(req, res) => {
+//     try {
+//         await Memo.create(req.body);
+//         res.redirect('/memos');
+//     } catch (err) {
+//         console.log(err);
+//         res.render('memos/new', { errorMessage: err.message });
+//     }
+// }
+
+// cloudlinary
 const create = async(req, res) => {
     try {
-        await Memo.create(req.body);
-        res.redirect('/memos');
+        const result = await cloudinary.uploader.upload(req.file.path);
+        // await Memo.create(req.body);
+        const book = new Memo({
+            ...req.body,
+            image: result.secure_url,
+            cloudinary_id: result.public_id
+        })
+        await memo.save();
+        res.redirect('/memos/${memo._id');
     } catch (err) {
         console.log(err);
         res.render('memos/new', { errorMessage: err.message });
