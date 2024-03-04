@@ -7,10 +7,12 @@ passport.use(new GoogleStrategy(
     {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: callbackURL
+        callbackURL: process.env.GOOGLE_CALLBACK || process.env.GOOGLE_CALLBACK_HEROKU
+
+        // clientID: process.env.GOOGLE_CLIENT_ID,
+        // clientSecret: process.env.GOOGLE_SECRET,
+        // callbackURL: callbackURL
     },
-    // The verify callback function...
-    // Marking a function as an async function allows us to consume promises using the await keyword
     async function(accessToken, refreshToken, profile, cb) {
       // When using async/await we use a try/catch block to handle an error
       try {
@@ -40,9 +42,9 @@ passport.use(new GoogleStrategy(
     cb(null, await User.findById(userId));
   });
 
-let callbackURL;
-    if (process.env.NODE_ENV === 'production') {
-        callbackURL = process.env.GOOGLE_CALLBACK_HEROKU;
-        } else {
-            callbackURL = process.env.GOOGLE_CALLBACK;
-}
+// let callbackURL;
+//     if (process.env.NODE_ENV === 'production') {
+//         callbackURL = process.env.GOOGLE_CALLBACK_HEROKU;
+//     } else {
+//         callbackURL = process.env.GOOGLE_CALLBACK;
+// }
