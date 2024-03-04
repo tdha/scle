@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<h1>/m</h1>
+
+<form id="new-memo" action="/memos/<%= memo._id %>?_method=PUT" method="POST">
+    <label>Date</label>
+    <input type="date" name="date" value="<%= memo.date.toISOString().slice(0, 10) %>">
+    <label>Location</label>
+    <input type="text" name="location" value="<%= memo.location %>">
+    <label>Note</label>
+    <input type="text" name="note" value="<%= memo.note %>">
+    <input type="submit" value="Update memo">
+</form>
+
+<%- include('../partials/footer') %>

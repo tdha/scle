@@ -4,11 +4,14 @@
 
 <section>
 <% memos.forEach(function(m) { %>
-    <p><%= m.date %></p>
+    <p><%= m.formattedDate %></p>
     <p><%= m.location %></p>
     <p><%= m.note %></p>
+    <form action="/memos/<%= m._id %>/edit" method="GET">
+        <button type="submit">Edit</button>
+    </form>
     <hr>
- <% }); %>
+<% }); %>
 </section>
 
 <%- include('../partials/footer') %>
