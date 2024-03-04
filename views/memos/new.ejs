@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<h1>/m</h1>
+
+<form id="new-memo" action="/memos" method="POST">
+    <label>Date</label>
+    <input type="date" name="date" value="<%= new Date().toISOString().split('T')[0] %>">
+    <label>Location</label>
+    <input type="text" name="location">
+    <label>Note</label>
+    <input type="text" name="note">
+    <input type="reset" value="Clear">
+    <input type="submit" value="Save memo">
+</form>
+
+
+<%- include('../partials/footer') %>

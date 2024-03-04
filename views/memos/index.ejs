@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+<h1>/m</h1>
+
+<section>
+<% memos.forEach(function(m) { %>
+    <p><%= m.date %></p>
+    <p><%= m.location %></p>
+    <p><%= m.note %></p>
+    <hr>
+ <% }); %>
+</section>
+
+<%- include('../partials/footer') %>

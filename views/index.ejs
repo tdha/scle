@@ -6,6 +6,12 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <p>Recalling details from conversations can be hard.</p>
+    <p>Let's fix that.</p>
+    <% if (user) { %>
+      <button><a href="/logout">Log out</a></button>
+    <% } else { %>
+      <button><a href="/auth/google" class="login">Log in with Google</a></button>
+    <% } %>
   </body>
 </html>

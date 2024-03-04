@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>SCLE - Social Cognitive Limit Expander</title>
+</head>
+<body>
+    <nav>
+        <a href="/memos/new">SCLE</a>
+        <a href="/memos">All memos</a>
+        <a href="/community">Contacts</a>
+        <% if (user) { %>
+            <a href="/logout">Log out</a>
+          <% } else { %>
+            <a href="/auth/google" class="login">Log in with Google</a>
+        <% } %>
+    </nav>
+    <main>
+        <!-- <h1>(if I need a title)</h1> -->
