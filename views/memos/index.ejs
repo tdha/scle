@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
 
-<h1>Memos</h1>
+<h1>/m</h1>
+<a href="/memos/new" class="iconButton">Add Memo</a>
 
 <section>
 <% memos.forEach(function(m) { %>
@@ -24,7 +25,7 @@
 
 <script>
 function confirmDelete() {
-    return confirm('Are you sure you want to delete this memo?');
+    return confirm('Are you sure you want to delete?');
 }
 </script>
 

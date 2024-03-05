@@ -9,7 +9,13 @@ const networkSchema = new Schema({
     email: {
         type: String
     },
-    phoneNumber: {
+    phone: {
+        type: String
+    },
+    image: {
+        type: String
+    },
+    cloudinary_id: {
         type: String
     },
     user: {
@@ -21,4 +27,4 @@ const networkSchema = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Contact', networkSchema);
+module.exports = mongoose.model('Network', networkSchema);
