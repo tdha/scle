@@ -7,6 +7,7 @@
 <% memos.forEach(function(m) { %>
     <p><%= m.formattedDate %></p>
     <p><%= m.location %></p>
+    <p><%= m.networkName %></p>
     <p><%= m.note %></p>
     <% if (m.image && m.image !== 'defaultImageURLHere') { %>
         <img src="<%= m.image %>" alt="uploaded image">

@@ -22,7 +22,11 @@ const memoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
-      }
+      },
+    network: {
+        type: Schema.Types.ObjectId,
+        ref: 'Network'
+    }   
 }, {
     timestamps: true
 });
