@@ -10,5 +10,6 @@ router.get('/new', ensureLoggedIn, memosController.new);
 router.post('/', upload.single('image'), ensureLoggedIn, memosController.create);
 router.get('/:id/edit', ensureLoggedIn, memosController.edit);
 router.put('/:id', ensureLoggedIn, memosController.update);
+router.delete('/:id', ensureLoggedIn, memosController.delete);
 
 module.exports = router;

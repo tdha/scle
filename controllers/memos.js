@@ -77,10 +77,25 @@ const update = async(req, res) => {
     }
 }
 
+const deleteMemo = async (req, res) => {
+    try {
+        const memo = await Memo.findById(req.params.id);
+        if (memo.cloudinary_id) {
+            await cloudinary.uploader.destroy(memo.cloudinary_id);
+        }
+        await Memo.findByIdAndDelete(req.params.id);
+        res.redirect('/memos');
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error deleting memo");
+    }
+};
+
 module.exports = {
     index,
     new: newMemo,
     create,
     edit: editMemo,
-    update
+    update,
+    delete: deleteMemo
 }
