@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const networkSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String

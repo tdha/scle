@@ -2,6 +2,10 @@
 
 <h1>/n</h1>
 
+<% if (errorMessage) { %>
+    <p style="color: #FF1744;"><%= errorMessage %></p>
+<% } %>
+
 <form action="/networks" enctype="multipart/form-data" method="POST">
     <label>Name</label>
     <input type="text" name="name" required>

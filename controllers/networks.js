@@ -20,7 +20,7 @@ const index = async (req, res) => {
 };
 
 const newNetwork = (req, res) => {
-    res.render('networks/new', {title: 'New Network', errorMsg: ''});
+    res.render('networks/new', {title: 'New Network', errorMessage: ''});
 }
 
 const create = async(req, res) => {
@@ -47,10 +47,23 @@ const create = async(req, res) => {
         await network.save();
         res.redirect('/networks');
     } catch (err) {
-        console.log(err);
-        res.render('networks/new', { errorMessage: err.message });
+        if (err.code === 11000) { // Check for the duplicate key error code
+            // Handle duplicate name error specifically
+            res.render('networks/new', { 
+                errorMessage: 'This name already exists. Please use a different name.',
+                formData: req.body 
+            });
+        } else {
+            // Handle other types of errors
+            console.log(err);
+            res.render('networks/new', { 
+                errorMessage: err.message,
+                formData: req.body
+            });
+        }
     }
 };
+
 
 const editNetwork = async(req, res) => {
     try {
