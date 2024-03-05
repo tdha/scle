@@ -1,14 +1,30 @@
 const Network = require('../models/network');
+const Memo = require('../models/memo');
 const cloudinary = require('../utilities/cloudinary');
 
+// const index = async (req, res) => {
+//     try {
+//         const networks = await Network.find({});
+//         const networksWithPlaceholder = networks.map(network => {
+//             const modifiedNetwork = network.toObject();
+//             if (!modifiedNetwork.image || modifiedNetwork.image === 'defaultImageURLHere') {
+//                 modifiedNetwork.image = '/images/default-profile-image.png';
+//             }
+//             return modifiedNetwork;
+//         });
+
+//         res.render('networks/index', { networks: networksWithPlaceholder });
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send("Error fetching networks");
+//     }
+// };
 const index = async (req, res) => {
     try {
-        const networks = await Network.find({});
+        const networks = await Network.find({}).populate('user'); // Assuming networks are associated with users
         const networksWithPlaceholder = networks.map(network => {
             const modifiedNetwork = network.toObject();
-            if (!modifiedNetwork.image || modifiedNetwork.image === 'defaultImageURLHere') {
-                modifiedNetwork.image = '/images/default-profile-image.png';
-            }
+            modifiedNetwork.image = modifiedNetwork.image || '/images/default-profile-image.png'; // Simplify default image handling
             return modifiedNetwork;
         });
 
@@ -18,6 +34,43 @@ const index = async (req, res) => {
         res.status(500).send("Error fetching networks");
     }
 };
+
+// const show = async(req, res) => {
+//     const network = await Network.findById(req.params.id);
+//     res.render('networks/show', { title: network.title, network });
+// }
+
+// const show = async (req, res) => {
+//     try {
+//         const network = await Network.findById(req.params.id).populate('user'); 
+//         network.image = network.image || '/images/default-profile-image.png';
+//         res.render('networks/show', { network });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Error fetching network details");
+//     }
+// };
+
+const show = async (req, res) => {
+    try {
+        const network = await Network.findById(req.params.id);
+        const memos = await Memo.find({ network: network._id }).populate('network');
+
+        // Format dates in memos
+        const memosWithFormattedDate = memos.map(memo => {
+            const memoObject = memo.toObject();
+            console.log(memosWithFormattedDate);
+            memoObject.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
+            return memoObject;
+        });
+
+        res.render('networks/show', { n: network, memos: memosWithFormattedDate });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching network details");
+    }
+};
+
 
 const newNetwork = (req, res) => {
     res.render('networks/new', {title: 'New Network', errorMessage: ''});
@@ -102,6 +155,7 @@ const deleteNetwork = async (req, res) => {
 
 module.exports = {
     index,
+    show,
     new: newNetwork,
     create,
     edit: editNetwork,

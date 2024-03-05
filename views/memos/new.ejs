@@ -3,23 +3,34 @@
 <h1>/m</h1>
 
 <form action="/memos" enctype="multipart/form-data" method="POST">
-    <label>I met with</label>
-    <input type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="Select or type a new network name" required>
-    <datalist id="networkNamesList">
-        <% networks.forEach(function(network) { %>
-            <option value="<%= network.name %>"></option>
-        <% }); %>
-    </datalist>
-    <label>at</label>
-    <input type="text" name="location" placeholder="location">
-    <label>about</label>
-    <textarea type="text" name="note" placeholder="things to remember"></textarea>
-    <input type="file" name="image">
-    <label>Date</label>
-    <input type="date" name="date" value="<%= today %>">
+    <div>
+        <label class="form-label">I met with</label>
+        <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="Select or type a new network name" required>
+        <datalist id="networkNamesList">
+            <% networks.forEach(function(network) { %>
+                <option value="<%= network.name %>"></option>
+            <% }); %>
+        </datalist>
+    </div>
+    <div>
+        <label class="form-label">at</label>
+        <input class="form-control" type="text" name="location" placeholder="location">
+    </div>
+    <div>
+        <label class="form-label">about</label>
+        <textarea class="form-control" name="note" placeholder="things to remember for next time (memo)"></textarea>
+    </div>
+    <div>
+        <input class="form-control" type="file" name="image">
+    </div>
+    <div>
+        <label>Date</label>
+        <input class="form-control" type="date" name="date" value="<%= today %>">
+    </div>
     <a href="/memos" class="button">Cancel</a>
     <input type="reset" value="Clear">
-    <input type="submit" value="Save memo">
+   <!-- <button class="btn btn-primary"><input type="submit" value="Save memo"></button> -->
+   <button class="btn btn-primary" type="submit" value="Save memo">Save</button>
 
 </form>
 

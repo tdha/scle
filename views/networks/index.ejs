@@ -5,7 +5,7 @@
 
 <section>
 <% networks.forEach(function(n) { %>
-    <p><%= n.name %></p>
+    <a href="/networks/<%= n._id %>"><p><%= n.name %></p></a> 
     <p><%= n.email %></p>
     <p><%= n.phone %></p>
     <% if (n.image && n.image !== 'defaultImageURLHere') { %>

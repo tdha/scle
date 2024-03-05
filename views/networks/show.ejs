@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<h1>/n</h1>
+
+<section>
+    <% if (n.image && n.image !== 'defaultImageURLHere') { %>
+        <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" style="max-width: 64px; height: auto;">
+    <% } else { %>
+        <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 64px; height: auto;">
+    <% } %>
+    <p><%= n.name %></p>
+    <p>Email: <%= n.email %></p>
+    <p>Phone: <%= n.phone %></p>
+</section>
+
+<hr>
+<p>Memo</p>
+<hr>
+
+<section>
+    <% memos.forEach(function(m) { %>
+        <p><%= m.formattedDate %></p>
+        <p><%= m.location %></p>
+        <p><%= m.network.name %></p> 
+        <p><%= m.note %></p>
+        <% if (m.image && m.image !== 'defaultImageURLHere') { %>
+            <img src="<%= m.image %>" alt="uploaded image">
+        <% } %>
+        <form action="/memos/<%= m._id %>/edit" method="GET">
+            <button type="submit">Edit</button>
+        </form>
+        <% if (user && user._id.equals(m.user)) { %>
+            <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
+                <button type="submit">Delete</button>
+            </form>
+        <% } %>
+        <hr>
+    <% }); %>
+</section>
+
+<%- include('../partials/footer') %>
