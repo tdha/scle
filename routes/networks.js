@@ -8,8 +8,8 @@ const ensureLoggedIn = require('../config/ensureLoggedIn');
 router.get('/', ensureLoggedIn, networksController.index);
 router.get('/new', ensureLoggedIn, networksController.new);
 router.post('/', upload.single('image'), ensureLoggedIn, networksController.create);
-// router.get('/:id/edit', ensureLoggedIn, networksController.edit);
-// router.put('/:id', ensureLoggedIn, networksController.update);
-// router.delete('/:id', ensureLoggedIn, networksController.delete);
+router.get('/:id/edit', ensureLoggedIn, networksController.edit);
+router.put('/:id', ensureLoggedIn, networksController.update);
+router.delete('/:id', ensureLoggedIn, networksController.delete);
 
 module.exports = router;

@@ -1,12 +1,6 @@
 const Network = require('../models/network');
 const cloudinary = require('../utilities/cloudinary');
 
-// const index = async(req, res) => {
-//     const networks = await Network.find({});
-//     console.log(index);
-//     res.render('networks/index', {title: 'Network', networks});
-// }
-
 const index = async (req, res) => {
     try {
         const networks = await Network.find({});
@@ -58,11 +52,46 @@ const create = async(req, res) => {
     }
 };
 
+const editNetwork = async(req, res) => {
+    try {
+        const network = await Network.findById(req.params.id);
+        res.render('networks/edit', { network, errorMessage: '' });
+    } catch (err) {
+        console.log(err);
+        res.redirect('/networks');
+    }
+}
+
+const update = async(req, res) => {
+    const id = req.params.id;
+    try {
+        await Network.findByIdAndUpdate(id, req.body);
+        res.redirect('/networks');
+    } catch (err) {
+        console.log(err);
+        res.render('networks/edit', { network: { ...req.body, _id: id}, errorMessage: err.message });
+    }
+}
+
+const deleteNetwork = async (req, res) => {
+    try {
+        const network = await Network.findById(req.params.id);
+        if (network.cloudinary_id) {
+            await cloudinary.uploader.destroy(network.cloudinary_id);
+        }
+        await Network.findByIdAndDelete(req.params.id);
+        res.redirect('/networks');
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error deleting memo");
+    }
+};
+
 module.exports = {
     index,
     new: newNetwork,
     create,
-    // edit: editNetwork,
-    // update,
-    // delete: deleteNetwork
+    edit: editNetwork,
+    update,
+    delete: deleteNetwork
 }
