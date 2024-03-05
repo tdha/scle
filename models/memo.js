@@ -12,14 +12,17 @@ const memoSchema = new Schema({
         type: String,
         required: true
     },
-    // cloudinary
     image: {
         type: String
     },
-    // cloudinary
     cloudinary_id: {
         type: String
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      }
 }, {
     timestamps: true
 });

@@ -4,7 +4,7 @@ const cloudinary = require('../utilities/cloudinary');
 
 const index = async(req, res) => {
     try {
-        const memos = await Memo.find({});
+        const memos = await Memo.find({user: req.user._id});
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject(); 
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
@@ -35,12 +35,17 @@ const create = async(req, res) => {
         }
         
         const imageUrl = imageUploadResult.secure_url || 'defaultImageURLHere'; 
-        const cloudinaryId = imageUploadResult.public_id || ''; 
+        const cloudinaryId = imageUploadResult.public_id || '';
+
+        if (!req.user) {
+            throw new Error('User not authenticated');
+        }
         
         const memo = new Memo({
-            ...req.body, 
+            ...req.body,
             image: imageUrl,
-            cloudinary_id: cloudinaryId
+            cloudinary_id: cloudinaryId,
+            user: req.user._id
         });
 
         await memo.save();
