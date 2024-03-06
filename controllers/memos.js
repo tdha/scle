@@ -4,20 +4,34 @@ const Network = require('../models/network');
 
 const index = async(req, res) => {
     try {
-        const memos = await Memo.find({user: req.user._id}).populate('network').sort({ createdAt: -1});
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 24;
+        const skip = (page - 1) * limit;
+
+        const memos = await Memo.find({user: req.user._id})
+                                .populate('network')
+                                .sort({ createdAt: -1 })
+                                .skip(skip)
+                                .limit(limit);
+
+        const totalMemos = await Memo.countDocuments({user: req.user._id});
+        const totalPages = Math.ceil(totalMemos / limit);
+
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject();
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
             formattedMemo.networkName = memo.network ? memo.network.name : 'No Network';
             return formattedMemo;
         });
-        console.log('Show list of memos');
-        res.render('memos/index', { memos: formattedMemos });
+
+        // Pass totalPages to the view for pagination controls
+        res.render('memos/index', { memos: formattedMemos, page, totalPages });
     } catch (err) {
         console.log(err);
         res.status(500).send("Error fetching memos");
     }
 };
+
 
 
 const newMemo = async (req, res) => {

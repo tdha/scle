@@ -13,7 +13,7 @@
             <p class="memo-details bold-name"><%= m.networkName %></p>
             <p class="memo-details"><%= m.note %></p>
             <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);">
+                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy">
             <% } %>
             
             <section class="memo-cta">
@@ -36,6 +36,18 @@
         return confirm('Are you sure you want to delete?');
     }
     </script>
+
+        <% if (totalPages > 1) { %>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <% for(let i = 1; i <= totalPages; i++) { %>
+                    <li class="page-item <%= i === page ? 'active' : '' %>">
+                        <a class="page-link" href="/memos?page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
 
     </div>
     </div>
@@ -64,6 +76,5 @@
       imageModal.show();
     }
 </script>
-    
-  
+
 <%- include('../partials/footer') %>
