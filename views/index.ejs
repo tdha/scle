@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<%- include('./partials/header-index') %>
+
+<div class="row">
+  <div class="offset-md-3 col-md-6">
     <h1><%= title %></h1>
     <p>Recalling details from conversations can be hard.</p>
     <p>Let's fix that.</p>
     <% if (user) { %>
-      <button><a href="/logout">Log out</a></button>
+      <a href="/logout" class="btn btn-outline-primary" role="button">Log out</a>
     <% } else { %>
-      <button><a href="/auth/google" class="login">Log in with Google</a></button>
+      <a href="/auth/google" class="btn btn-outline-primary" role="button">Log in with Google</a>
     <% } %>
-  </body>
-</html>
+  </div>
+</div>
+
+    <%- include('./partials/footer') %>
