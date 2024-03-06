@@ -13,7 +13,7 @@
             <p class="memo-details bold-name"><%= m.networkName %></p>
             <p class="memo-details"><%= m.note %></p>
             <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-                <img src="<%= m.image %>" alt="uploaded image">
+                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);">
             <% } %>
             
             <section class="memo-cta">
@@ -41,4 +41,29 @@
     </div>
 </div>
 
+<!-- Bootstrap image modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showImageModal(src) {
+      document.getElementById('modalImage').src = src;
+      
+      var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+      imageModal.show();
+    }
+</script>
+    
+  
 <%- include('../partials/footer') %>

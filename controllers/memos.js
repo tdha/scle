@@ -4,7 +4,7 @@ const Network = require('../models/network');
 
 const index = async(req, res) => {
     try {
-        const memos = await Memo.find({user: req.user._id}).populate('network').sort({ date: -1});
+        const memos = await Memo.find({user: req.user._id}).populate('network').sort({ createdAt: -1});
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject();
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
