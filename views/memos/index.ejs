@@ -1,33 +1,44 @@
 <%- include('../partials/header') %>
 
-<h1>/m</h1>
-<a href="/memos/new" class="iconButton">Add Memo</a>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
 
-<section>
-<% memos.forEach(function(m) { %>
-    <p><%= m.formattedDate %></p>
-    <p><%= m.location %></p>
-    <p><%= m.networkName %></p>
-    <p><%= m.note %></p>
-    <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-        <img src="<%= m.image %>" alt="uploaded image">
-    <% } %>
-    <form action="/memos/<%= m._id %>/edit" method="GET">
-        <button type="submit">Edit</button>
-    </form>
-    <% if (user && user._id.equals(m.user)) { %>
-        <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
-            <button type="submit">Delete</button>
-        </form>
-    <% } %>
-    <hr>
-<% }); %>
-</section>
+        <h2>MEMOS</h2>
 
-<script>
-function confirmDelete() {
-    return confirm('Are you sure you want to delete?');
-}
-</script>
+        <% memos.forEach(function(m) { %>
+        <div>
+            <p class="memo"><%= m.formattedDate %></p>
+            <p class="memo"><%= m.location %></p>
+            <p class="memo bold-name"><%= m.networkName %></p>
+            <p class="memo"><%= m.note %></p>
+            <% if (m.image && m.image !== 'defaultImageURLHere') { %>
+                <img src="<%= m.image %>" alt="uploaded image">
+            
+            <section class="memo-cta">
+                <% } %>
+                    <form action="/memos/<%= m._id %>/edit" method="GET">
+                        <button type="submit" class=" btn memo-icon"><img src="/images/icon-edit.png" alt="edit"></button>
+                    </form>
+                <% if (user && user._id.equals(m.user)) { %>
+                    <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
+                        <button class="btn memo-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
+                    </form>
+                <% } %>
+            </section>
+
+            <hr>
+        </div>
+        <% }); %>
+
+    <script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete?');
+    }
+    </script>
+
+    </div>
+    </div>
+</div>
 
 <%- include('../partials/footer') %>

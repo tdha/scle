@@ -1,16 +1,24 @@
-<%- include('./partials/header-index') %>
+<%- include('./partials/header') %>
 
-<div class="row">
-  <div class="offset-md-3 col-md-6">
-    <h1><%= title %></h1>
-    <p>Recalling details from conversations can be hard.</p>
-    <p>Let's fix that.</p>
-    <% if (user) { %>
-      <a href="/logout" class="btn btn-outline-primary" role="button">Log out</a>
-    <% } else { %>
-      <a href="/auth/google" class="btn btn-outline-primary" role="button">Log in with Google</a>
-    <% } %>
-  </div>
-</div>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
 
-    <%- include('./partials/footer') %>
+        <div>
+            <p>Recalling details from conversations can be hard.</p>
+            <p>Let's fix that.</p>
+        </div>
+
+        <div>
+            <% if (user) { %>
+            <a href="/logout" class="btn btn-outline-primary" role="button">Log out</a>
+            <% } else { %>
+            <a href="/auth/google" class="btn btn-outline-primary" role="button">Log in with Google</a>
+            <% } %>
+        </div>
+
+    </div>        
+    </div>        
+</div>        
+
+<%- include('./partials/footer') %>

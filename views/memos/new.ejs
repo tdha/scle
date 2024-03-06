@@ -1,43 +1,47 @@
 <%- include('../partials/header') %>
 
-<div class="row">
-    <div class="offset-md-3 col-md-6">
-        <h2>NEW MEMO</h2>
-    </div>
-<form action="/memos" enctype="multipart/form-data" method="POST">
-    <div class="offset-md-3 col-md-6">
-        <label class="form-label">I met with</label>
-        <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="(select or type a new name)" required>
-        <datalist id="networkNamesList">
-            <% networks.forEach(function(network) { %>
-                <option value="<%= network.name %>"></option>
-            <% }); %>
-        </datalist>
-    </div>
-    <div class="offset-md-3 col-md-6">
-        <label class="form-label">at</label>
-        <input class="form-control" type="text" name="location" placeholder="location">
-    </div>
-    <div class="offset-md-3 col-md-6">
-        <label class="form-label">about</label>
-        <textarea class="form-control" name="note" placeholder="things to remember for next time (memo)"></textarea>
-    </div>
-    <div class="offset-md-3 col-md-3">
-        <label>on</label>
-        <input class="form-control" type="date" name="date" value="<%= today %>">
-    </div>
-    <div class="offset-md-3 col-md-6">
-        <label>(optional)</label>
-        <input class="form-control" type="file" name="image">
-    </div>
-    <div id="cta" class="offset-md-3 col-md-6">
-        <a href="/memos" class="btn btn-link" role="button">Cancel</a>
-        <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
-        <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
-    </div>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
 
-</form>
+    <h2>NEW MEMO</h2>
+
+    <form action="/memos" enctype="multipart/form-data" method="POST">
+        <div>
+            <label class="form-label">I met with</label>
+            <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="(select or type a new name)" required>
+            <datalist id="networkNamesList">
+                <% networks.forEach(function(network) { %>
+                    <option value="<%= network.name %>"></option>
+                <% }); %>
+            </datalist>
+        </div>
+        <div>
+            <label class="form-label">at</label>
+            <input class="form-control" type="text" name="location" placeholder="location">
+        </div>
+        <div>
+            <label class="form-label">about</label>
+            <textarea class="form-control" name="note" placeholder="things to remember for next time (memo)"></textarea>
+        </div>
+        <div>
+            <label>on</label>
+            <input class="form-control" type="date" name="date" value="<%= today %>">
+        </div>
+        <div>
+            <label>(optional)</label>
+            <input class="form-control" type="file" name="image">
+        </div>
+        <div id="cta" >
+            <a href="/memos" class="btn btn-link" role="button">Cancel</a>
+            <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
+            <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+        </div>
+
+    </form>
+
+    </div>
+    </div>
 </div>
-
 
 <%- include('../partials/footer') %>

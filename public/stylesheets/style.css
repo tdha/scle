@@ -22,6 +22,7 @@ body {
 
 h1 {
   font-weight: 300;
+  color: #AA00FF;
 }
 
 h2 {
@@ -54,4 +55,17 @@ div {
 
 .navbar-toggler {
   border: var(--bs-border-width) solid rgb(0 0 0 / 0%);
+}
+
+.memo {
+  margin-bottom: 0px;
+}
+
+.memo-icon img {
+  width: 20px;
+  height: 20px;
+;}
+
+.bold-name {
+  font-weight: 600;
 }
