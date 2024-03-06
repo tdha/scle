@@ -58,13 +58,37 @@ div {
 }
 
 .memo {
+  position: relative;
+}
+
+.memo-details {
   margin-bottom: 0px;
 }
 
 .memo-icon img {
   width: 20px;
   height: 20px;
-;}
+  opacity: 0.3;
+}
+
+.memo-icon:hover img{
+  opacity: 1;
+}
+
+.memo-cta {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 0px;
+  position: absolute;
+  top: 0; 
+  right: 0;
+}
+
+.memo-divider {
+  margin-top: 12px;
+  margin-bottom: 28px;
+}
 
 .bold-name {
   font-weight: 600;
