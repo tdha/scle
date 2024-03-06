@@ -17,7 +17,6 @@ async function fetchContacts(accessToken) {
 
 // Save contacts to the database
 async function saveContacts(contacts) {
-    // Assuming each contact has a unique identifier from Google
     for (const contact of contacts) {
         const {resourceName, names, emailAddresses, phoneNumbers} = contact;
 
@@ -44,14 +43,12 @@ async function saveContacts(contacts) {
 
 exports.displayUserContacts = async (req, res) => {
   try {
-    const accessToken = req.user.accessToken; // access token stored in user session
+    const accessToken = req.user.accessToken; 
     const contacts = await fetchContacts(accessToken);
 
     // Save contacts to the database
     await saveContacts(contacts);
 
-    // For simplicity, directly renders the fetched contacts
-    // Option: could also retrieve them from the database after saving.
     res.render('contacts/index', {contacts});
   } catch (error) {
     console.error('Error fetching or saving contacts:', error);

@@ -1,38 +1,40 @@
 <%- include('../partials/header') %>
 
-<h1>/m</h1>
-
+<div class="row">
+    <h1>/m</h1>
 <form action="/memos" enctype="multipart/form-data" method="POST">
-    <div>
+    <div class="offset-md-3 col-md-6">
         <label class="form-label">I met with</label>
-        <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="Select or type a new network name" required>
+        <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="Select or type a new name to add" required>
         <datalist id="networkNamesList">
             <% networks.forEach(function(network) { %>
                 <option value="<%= network.name %>"></option>
             <% }); %>
         </datalist>
     </div>
-    <div>
+    <div class="offset-md-3 col-md-6">
         <label class="form-label">at</label>
         <input class="form-control" type="text" name="location" placeholder="location">
     </div>
-    <div>
+    <div class="offset-md-3 col-md-6">
         <label class="form-label">about</label>
         <textarea class="form-control" name="note" placeholder="things to remember for next time (memo)"></textarea>
     </div>
-    <div>
+    <div class="offset-md-3 col-md-6">
         <input class="form-control" type="file" name="image">
     </div>
-    <div>
+    <div class="offset-md-3 col-md-6">
         <label>Date</label>
         <input class="form-control" type="date" name="date" value="<%= today %>">
     </div>
-    <a href="/memos" class="button">Cancel</a>
-    <input type="reset" value="Clear">
-   <!-- <button class="btn btn-primary"><input type="submit" value="Save memo"></button> -->
-   <button class="btn btn-primary" type="submit" value="Save memo">Save</button>
+    <div class="offset-md-3 col-md-6">
+        <a href="/memos" class="btn btn-link" role="button">Cancel</a>
+        <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
+        <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+    </div>
 
 </form>
+</div>
 
 
 <%- include('../partials/footer') %>

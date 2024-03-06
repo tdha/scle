@@ -2,29 +2,13 @@ const Network = require('../models/network');
 const Memo = require('../models/memo');
 const cloudinary = require('../utilities/cloudinary');
 
-// const index = async (req, res) => {
-//     try {
-//         const networks = await Network.find({});
-//         const networksWithPlaceholder = networks.map(network => {
-//             const modifiedNetwork = network.toObject();
-//             if (!modifiedNetwork.image || modifiedNetwork.image === 'defaultImageURLHere') {
-//                 modifiedNetwork.image = '/images/default-profile-image.png';
-//             }
-//             return modifiedNetwork;
-//         });
 
-//         res.render('networks/index', { networks: networksWithPlaceholder });
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send("Error fetching networks");
-//     }
-// };
 const index = async (req, res) => {
     try {
-        const networks = await Network.find({}).populate('user'); // Assuming networks are associated with users
+        const networks = await Network.find({}).populate('user'); 
         const networksWithPlaceholder = networks.map(network => {
             const modifiedNetwork = network.toObject();
-            modifiedNetwork.image = modifiedNetwork.image || '/images/default-profile-image.png'; // Simplify default image handling
+            modifiedNetwork.image = modifiedNetwork.image || '/images/default-profile-image.png'; 
             return modifiedNetwork;
         });
 
@@ -35,36 +19,17 @@ const index = async (req, res) => {
     }
 };
 
-// const show = async(req, res) => {
-//     const network = await Network.findById(req.params.id);
-//     res.render('networks/show', { title: network.title, network });
-// }
-
-// const show = async (req, res) => {
-//     try {
-//         const network = await Network.findById(req.params.id).populate('user'); 
-//         network.image = network.image || '/images/default-profile-image.png';
-//         res.render('networks/show', { network });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Error fetching network details");
-//     }
-// };
-
 const show = async (req, res) => {
     try {
-        const network = await Network.findById(req.params.id);
-        const memos = await Memo.find({ network: network._id }).populate('network');
+        const network = await Network.findById(req.params.id).populate('user');
+        const memos = await Memo.find({ network: network._id }).populate('network', 'name');
+        
+        const formattedMemos = memos.map(memo => ({
+            ...memo.toObject(),
+            formattedDate: memo.date ? memo.date.toLocaleDateString() : 'No Date',
+        }));
 
-        // Format dates in memos
-        const memosWithFormattedDate = memos.map(memo => {
-            const memoObject = memo.toObject();
-            console.log(memosWithFormattedDate);
-            memoObject.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
-            return memoObject;
-        });
-
-        res.render('networks/show', { n: network, memos: memosWithFormattedDate });
+        res.render('networks/show', { n: network, memos: formattedMemos });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error fetching network details");
@@ -100,8 +65,7 @@ const create = async(req, res) => {
         await network.save();
         res.redirect('/networks');
     } catch (err) {
-        if (err.code === 11000) { // Check for the duplicate key error code
-            // Handle duplicate name error specifically
+        if (err.code === 11000) { 
             res.render('networks/new', { 
                 errorMessage: 'This name already exists. Please use a different name.',
                 formData: req.body 

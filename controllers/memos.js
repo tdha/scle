@@ -41,7 +41,7 @@ const create = async(req, res) => {
             imageUploadResult = await cloudinary.uploader.upload(req.file.path);
         }
         
-        const imageUrl = imageUploadResult.secure_url || 'defaultImageURLHere'; 
+        const imageUrl = imageUploadResult.secure_url || ''; 
         const cloudinaryId = imageUploadResult.public_id || '';
         
         if (!req.user) {
@@ -52,10 +52,9 @@ const create = async(req, res) => {
         if (req.body.networkName) {
             network = await Network.findOne({ name: req.body.networkName });
             if (!network) {
-                // Include the user's ID when creating a new network
                 network = new Network({
                     name: req.body.networkName,
-                    user: req.user._id // Assign the user ID here
+                    user: req.user._id 
                 });
                 await network.save();
             }
@@ -65,7 +64,7 @@ const create = async(req, res) => {
             ...req.body,
             image: imageUrl,
             cloudinary_id: cloudinaryId,
-            user: req.user._id, // Already correctly included
+            user: req.user._id, 
             network: network ? network._id : undefined
         });
 
@@ -73,7 +72,6 @@ const create = async(req, res) => {
         res.redirect('/memos');
     } catch (err) {
         console.log(err);
-        // Properly handle error scenario for re-rendering the form
         const networks = await Network.find({});
         const now = new Date();
         const timezoneOffset = now.getTimezoneOffset() * 60000;
