@@ -1,16 +1,37 @@
 <%- include('../partials/header') %>
 
-<h1>/m</h1>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
 
-<form id="new-memo" action="/memos/<%= memo._id %>?_method=PUT" method="POST">
-    <label>Date</label>
-    <input type="date" name="date" value="<%= memo.date.toISOString().slice(0, 10) %>">
-    <label>Location</label>
-    <input type="text" name="location" value="<%= memo.location %>">
-    <label>Note</label>
-    <textarea name="note"><%= memo.note %></textarea>
-    <a href="/memos" class="button">Cancel</a>
-    <input type="submit" value="Update memo">
-</form>
+    <h2>EDIT MEMO</h2>
+
+    <form id="new-memo" action="/memos/<%= memo._id %>?_method=PUT" method="POST">
+        <div>
+            <label class="form-label">I met with</label>
+            <p class="entry-details bold-name"><%= memo.network.name %></p>
+        </div>
+        <div>
+            <label class="form-label">at</label>
+            <input class="form-control" type="text" name="location" value="<%= memo.location %>">
+        </div>
+        <div>
+            <label class="form-label">about</label>
+            <textarea class="form-control" name="note" rows="5"><%= memo.note %></textarea>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">on</label>
+            <input class="form-control" type="date" name="date" value="<%= memo.date.toISOString().slice(0, 10) %>">
+        </div>
+        <div id="cta">
+            <a href="/memos" class="btn btn-link" role="button">Cancel</a>
+            <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+        </div>
+    </form>
+
+    </div>
+    </div>
+</div>
 
 <%- include('../partials/footer') %>
+

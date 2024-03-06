@@ -5,7 +5,7 @@ const cloudinary = require('../utilities/cloudinary');
 
 const index = async (req, res) => {
     try {
-        const networks = await Network.find({user: req.user._id}).populate('user'); 
+        const networks = await Network.find({user: req.user._id}).populate('user').sort({ name: 1 }); 
         const networksWithPlaceholder = networks.map(network => {
             const modifiedNetwork = network.toObject();
             modifiedNetwork.image = modifiedNetwork.image || '/images/default-profile-image.png'; 

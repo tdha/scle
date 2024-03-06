@@ -32,11 +32,9 @@ const index = async(req, res) => {
     }
 };
 
-
-
 const newMemo = async (req, res) => {
     try {
-        const networks = await Network.find({});
+        const networks = await Network.find({user: req.user._id});
         const now = new Date();
         const timezoneOffset = now.getTimezoneOffset() * 60000;
         const localISOTime = (new Date(now - timezoneOffset)).toISOString().split('T')[0];
@@ -97,7 +95,7 @@ const create = async(req, res) => {
 
 const editMemo = async(req, res) => {
     try {
-        const memo = await Memo.findById(req.params.id);
+        const memo = await Memo.findById(req.params.id).populate('network');
         res.render('memos/edit', { memo, errorMessage: '' });
     } catch (err) {
         console.log(err);

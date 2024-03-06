@@ -7,24 +7,22 @@
         <h2>MEMOS</h2>
 
         <% memos.forEach(function(m) { %>
-        <div class="memo">
-            <p class="memo-details"><%= m.formattedDate %></p>
-            <p class="memo-details"><%= m.location %></p>
-            <p class="memo-details bold-name"><%= m.networkName %></p>
-            <p class="memo-details"><%= m.note %></p>
+        <div class="entry">
+            <p class="entry-details"><%= m.formattedDate %></p>
+            <p class="entry-details"><%= m.location %></p>
+            <p class="entry-details bold-name"><%= m.networkName %></p>
+            <p class="entry-details"><%= m.note %></p>
             <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy">
+                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="memo-img">
             <% } %>
             
-            <section class="memo-cta">
+            <section class="entry-cta">
                     <form action="/memos/<%= m._id %>/edit" method="GET">
-                        <button type="submit" class=" btn memo-icon"><img src="/images/icon-edit.png" alt="edit"></button>
+                        <button type="submit" class=" btn entry-icon"><img src="/images/icon-edit.png" alt="edit"></button>
                     </form>
-                <% if (user && user._id.equals(m.user)) { %>
                     <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
-                        <button class="btn memo-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
+                        <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
                     </form>
-                <% } %>
             </section>
 
             <hr class="memo-divider">
