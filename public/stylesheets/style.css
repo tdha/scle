@@ -159,3 +159,16 @@ a {
 .page-link {
   color: #AA00FF;
 }
+
+@media (max-width: 767px) {
+  .navbar-custom .navbar-nav {
+    flex-direction: row !important;
+  }
+  .navbar-custom .nav-item {
+    float: right;
+    margin-left: 24px;
+  }
+  .navbar-custom .navbar-toggler {
+    display: none;
+  }
+}
