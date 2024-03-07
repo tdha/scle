@@ -32,6 +32,7 @@ Version 1.0
 - Express
 - HTML
 - CSS
+- MongoDB
 - Heroku
 - Cloudinary
 - Google OAuth
