@@ -8,7 +8,9 @@ SCLE – Social Cognitive Limit Expander – is a lightweight and flexible digi
 
 Like the trusted notebook of yesteryear, SCLE lets you quickly record and remember the small details that make your next conversations relatable and empathetic.  
 
-Recalling details from conversations can be hard. Let's fix [that](https://scle-44d0f77b81bd.herokuapp.com).
+Recalling details from conversations can be hard. Let's fix that.
+
+[LINK TO SCLE](https://scle-44d0f77b81bd.herokuapp.com)
 
 ## Features
 
