@@ -4,46 +4,91 @@
     <div class="row">
     <div class="offset-md-3 col-md-6 ps-0 pe-0">
 
-    <h2><%= n.name %></h2>
+    <section class="d-flex justify-content-between align-items-start">
+        <% if (n.image && n.image !== 'defaultImageURLHere') { %>
+            <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" class="img-fluid img-profileShow">
+        <% } else { %>
+            <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 64px; height: auto;">
+        <% } %>
+        <a href="/networks" ><img src="/images/icon-back.png" alt="back to view all contacts" class="iconButton"></a>
+    </section>
+    
+    <section>
+        <h2 class="me-3" id="profileTitle"><%= n.name %></h2>
+        <div class="entry">
+            <p class="entry-details"><%= n.email ? n.email : '@' %></p>
+            <p class="entry-details"><%= n.phone ? n.phone : '#' %></p>
+        </div>
+    </section>
 
-<section>
-    <% if (n.image && n.image !== 'defaultImageURLHere') { %>
-        <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" style="max-width: 64px; height: auto;">
-    <% } else { %>
-        <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 64px; height: auto;">
-    <% } %>
-    <p><%= n.name %></p>
-    <p>Email: <%= n.email %></p>
-    <p>Phone: <%= n.phone %></p>
-</section>
+<h5>Memos</h5>
+<hr class="network-divider">
 
-<hr>
-<p>Memo</p>
-<hr>
-
-<section>
-    <% memos.forEach(function(m) { %>
-        <p><%= m.formattedDate %></p>
-        <p><%= m.location %></p>
-        <p><%= m.network.name %></p> 
-        <p><%= m.note %></p>
+<% memos.forEach(function(m) { %>
+    <div class="entry">
+        <p class="entry-details"><%= m.formattedDate %></p>
+        <p class="entry-details"><%= m.location %></p>
+        <p class="entry-details bold-name"><%= m.networkName %></p>
+        <p class="entry-details"><%= m.note %></p>
         <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-            <img src="<%= m.image %>" alt="uploaded image">
+            <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="memo-img">
         <% } %>
-        <form action="/memos/<%= m._id %>/edit" method="GET">
-            <button type="submit">Edit</button>
-        </form>
-        <% if (user && user._id.equals(m.user)) { %>
-            <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
-                <button type="submit">Delete</button>
-            </form>
+        
+        <section class="entry-cta">
+                <form action="/memos/<%= m._id %>/edit" method="GET">
+                    <button type="submit" class=" btn entry-icon"><img src="/images/icon-edit.png" alt="edit"></button>
+                </form>
+                <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
+                    <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
+                </form>
+        </section>
+
+        <hr class="memo-divider">
+    </div>
+<% }); %>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete?');
+    }
+</script>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <% for(let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+            <a class="page-link" href="/networks/<%= n._id %>?page=<%= i %>"><%= i %></a>
+        </li>
         <% } %>
-        <hr>
-    <% }); %>
-</section>
+    </ul>
+</nav>
 
     </div>
     </div>
 </div>
+
+<!-- Bootstrap image modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showImageModal(src) {
+      document.getElementById('modalImage').src = src;
+      
+      var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+      imageModal.show();
+    }
+</script>
 
 <%- include('../partials/footer') %>

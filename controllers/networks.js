@@ -19,17 +19,48 @@ const index = async (req, res) => {
     }
 };
 
+// const show = async (req, res) => {
+//     try {
+//         const network = await Network.findById(req.params.id).populate('user').sort({ date: -1});
+//         const memos = await Memo.find({ network: network._id }).populate('network', 'name');
+        
+//         const formattedMemos = memos.map(memo => ({
+//             ...memo.toObject(),
+//             formattedDate: memo.date ? memo.date.toLocaleDateString() : 'No Date',
+//         }));
+
+//         res.render('networks/show', { n: network, memos: formattedMemos });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Error fetching network details");
+//     }
+// };
 const show = async (req, res) => {
     try {
-        const network = await Network.findById(req.params.id).populate('user').sort({ date: -1});
-        const memos = await Memo.find({ network: network._id }).populate('network', 'name');
-        
+        const { page = 1, limit = 12 } = req.query; // Default page and limit
+        const networkId = req.params.id;
+
+        const network = await Network.findById(networkId);
+        const totalMemos = await Memo.countDocuments({ network: networkId });
+        const memos = await Memo.find({ network: networkId })
+                                .populate('network', 'name')
+                                .sort({ createdAt: -1 })
+                                .skip((page - 1) * limit)
+                                .limit(parseInt(limit));
+
         const formattedMemos = memos.map(memo => ({
             ...memo.toObject(),
             formattedDate: memo.date ? memo.date.toLocaleDateString() : 'No Date',
         }));
 
-        res.render('networks/show', { n: network, memos: formattedMemos });
+        const totalPages = Math.ceil(totalMemos / limit);
+
+        res.render('networks/show', {
+            n: network,
+            memos: formattedMemos,
+            currentPage: parseInt(page),
+            totalPages
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error fetching network details");
@@ -65,19 +96,20 @@ const create = async(req, res) => {
         await network.save();
         res.redirect('/networks');
     } catch (err) {
+        let errorMessage = 'An error occurred';
         if (err.code === 11000) { 
-            res.render('networks/new', { 
-                errorMessage: 'This name already exists.',
-                formData: req.body 
-            });
+            errorMessage = 'This name already exists.';
+        } else if (err.name === 'ValidationError') {
+            // Get the first error message from the errors object
+            const errorsKeys = Object.keys(err.errors);
+            errorMessage = err.errors[errorsKeys[0]].message;
         } else {
-            // Handle other types of errors
             console.log(err);
-            res.render('networks/new', { 
-                errorMessage: err.message,
-                formData: req.body
-            });
         }
+        res.render('networks/new', { 
+            errorMessage,
+            formData: req.body 
+        });
     }
 };
 

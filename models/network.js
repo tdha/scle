@@ -5,7 +5,8 @@ const networkSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        maxlength: [70, 'Name cannot be more than 70 characters.'] // UK Gov standards
     },
     email: {
         type: String
