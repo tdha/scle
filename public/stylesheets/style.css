@@ -149,3 +149,13 @@ a {
 #profileTitle {
   padding-bottom: 0px;
 }
+
+.active>.page-link, .page-link.active {
+  color: white ;
+  background-color: #AA00FF;
+  border-color: #AA00FF;
+}
+
+.page-link {
+  color: #AA00FF;
+}
