@@ -6,11 +6,17 @@ Technology has connected us to more people than we could have imagined, and ofte
 
 SCLE – Social Cognitive Limit Expander – is a lightweight and flexible digital way to jot down notes and record socially relevant information.
 
-Like the trusted notebook of yesteryear, SCLE lets you quickly record and remembering the small details that make your next conversations relatable and empathetic.  
+Like the trusted notebook of yesteryear, SCLE lets you quickly record and remember the small details that make your next conversations relatable and empathetic.  
 
 Recalling details from conversations can be hard. Let's fix [that](https://scle-44d0f77b81bd.herokuapp.com).
 
+## Features
 
+- Memo template to record who, where, when, and what (key conversation details)
+- Ability to attach an image to a memo
+- Simplified contacts directory with name, email, and phone number
+- View all memos by a specific contact
+- Sign in with Google
 
-
+## Technologies
 
