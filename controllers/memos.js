@@ -34,7 +34,7 @@ const index = async(req, res) => {
 
 const newMemo = async (req, res) => {
     try {
-        const networks = await Network.find({user: req.user._id});
+        const networks = await Network.find({user: req.user._id}).sort('name');
         const now = new Date();
         const timezoneOffset = now.getTimezoneOffset() * 60000;
         const localISOTime = (new Date(now - timezoneOffset)).toISOString().split('T')[0];

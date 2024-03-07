@@ -11,14 +11,22 @@
     <% } %>
 
 <form id="new-network" action="/networks/<%= network._id %>?_method=PUT" method="POST">
-    <label>Name</label>
-    <input type="text" name="name" value="<%= network.name %>">
-    <label>Email</label>
-    <input type="text" name="email" value="<%= network.email %>">
-    <label>Phone</label>
-    <input type="text" name="phone" value="<%= network.phone %>">
-    <a href="/networks" class="button">Cancel</a>
-    <input type="submit" value="Update network">
+    <div>
+        <label class="form-label">Name</label>
+        <input class="form-control" type="text" name="name" value="<%= network.name %>">
+    </div>
+    <div>
+        <label class="form-label">Email</label>
+        <input class="form-control" type="text" name="email" value="<%= network.email %>">
+    </div>
+    <div>
+        <label class="form-label">Phone</label>
+        <input class="form-control" type="text" name="phone" value="<%= network.phone %>">
+    </div>
+    <div id="cta">
+        <a href="/networks" class="btn btn-link">Cancel</a>
+        <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+    </div>
 </form>
 
     </div>
