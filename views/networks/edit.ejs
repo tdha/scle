@@ -1,6 +1,14 @@
 <%- include('../partials/header') %>
 
-<h1>/n</h1>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
+
+    <h2>EDIT CONTACT</h2>
+
+    <% if (errorMessage) { %>
+        <p style="color: #FF1744;"><%= errorMessage %></p>
+    <% } %>
 
 <form id="new-network" action="/networks/<%= network._id %>?_method=PUT" method="POST">
     <label>Name</label>
@@ -12,5 +20,9 @@
     <a href="/networks" class="button">Cancel</a>
     <input type="submit" value="Update network">
 </form>
+
+    </div>
+    </div>
+</div>
 
 <%- include('../partials/footer') %>

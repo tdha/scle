@@ -1,23 +1,41 @@
 <%- include('../partials/header') %>
 
-<h1>/n</h1>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
+
+    <h2>NEW CONTACT</h2>
 
 <% if (errorMessage) { %>
     <p style="color: #FF1744;"><%= errorMessage %></p>
 <% } %>
 
 <form action="/networks" enctype="multipart/form-data" method="POST">
-    <label>Name</label>
-    <input type="text" name="name" required>
-    <label>Email</label>
-    <input type="text" name="email" >
-    <label>Phone</label>
-    <input type="text" name="phone" >
-    <input type="file" name="image">
-    <a href="/networks" class="button">Cancel</a>
-    <input type="reset" value="Clear">
-    <input type="submit" value="Save to Network">
+    <div>
+        <label class="form-label">Name*</label>
+        <input class="form-control" type="text" name="name" placeholder="name or nickname" required>
+    </div>
+    <div>
+        <label class="form-label">Email</label>
+        <input class="form-control" type="text" name="email" >
+    </div>
+    <div>
+        <label class="form-label">Phone</label>
+        <input class="form-control" type="text" name="phone" >
+    </div>
+    <div>
+        <label class="form-label">Profile photo</label>
+        <input class="form-control" type="file" name="image">
+    </div>
+    <div id="cta">
+        <a href="/networks" class="btn btn-link" role="button">Cancel</a>
+        <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
+        <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+    </div>
 </form>
 
+    </div>
+    </div>
+</div>
 
 <%- include('../partials/footer') %>

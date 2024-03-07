@@ -67,7 +67,7 @@ const create = async(req, res) => {
     } catch (err) {
         if (err.code === 11000) { 
             res.render('networks/new', { 
-                errorMessage: 'This name already exists. Please use a different name.',
+                errorMessage: 'This name already exists.',
                 formData: req.body 
             });
         } else {
@@ -81,7 +81,6 @@ const create = async(req, res) => {
     }
 };
 
-
 const editNetwork = async(req, res) => {
     try {
         const network = await Network.findById(req.params.id);
@@ -93,15 +92,34 @@ const editNetwork = async(req, res) => {
 }
 
 const update = async(req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
+    const updatedData = req.body;
+
     try {
-        await Network.findByIdAndUpdate(id, req.body);
+        const existingNetwork = await Network.findOne({ name: updatedData.name, _id: { $ne: id } });
+
+        if (existingNetwork) {
+            return res.render('networks/edit', {
+                network: updatedData,
+                errorMessage: 'This name already exists.',
+                id: id
+            });
+        }
+
+        if (req.file) {
+            const imageUploadResult = await cloudinary.uploader.upload(req.file.path);
+            updatedData.image = imageUploadResult.secure_url || updatedData.image;
+            updatedData.cloudinary_id = imageUploadResult.public_id || updatedData.cloudinary_id;
+        }
+
+        await Network.findByIdAndUpdate(id, updatedData);
         res.redirect('/networks');
     } catch (err) {
-        console.log(err);
-        res.render('networks/edit', { network: { ...req.body, _id: id}, errorMessage: err.message });
+        console.error(err);
+        res.status(500).send("Error updating network");
     }
-}
+};
+
 
 const deleteNetwork = async (req, res) => {
     try {

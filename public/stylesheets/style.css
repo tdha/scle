@@ -93,7 +93,36 @@ a {
 }
 
 .iconButton {
-  width: 48px;
-  height: 48px;
-  margin-top: -12px;
+  width: 42px;
+  height: 42px;
+  margin-top: -6px;
+}
+
+.btn-outline-primary {
+  color: #AA00FF;
+  border-color: #AA00FF;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary.hover {
+  color: #ffffff;
+  background-color: #AA00FF;
+  border-color: #AA00FF;
+}
+
+.btn-outline-primary:active, .btn-outline-primary.active {
+  color: #ffffff;
+  background-color: #AA00FF !important;
+  border-color: #AA00FF !important;
+}
+
+.btn-link {
+  color: #AA00FF;
+}
+
+.btn-link:hover {
+  color: #6200EA;
+}
+
+.mandatory {
+  border-color: #00E5FF;
 }

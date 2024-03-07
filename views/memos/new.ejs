@@ -8,7 +8,7 @@
 
     <form action="/memos" enctype="multipart/form-data" method="POST">
         <div>
-            <label class="form-label">I met with</label>
+            <label class="form-label">I met with*</label>
             <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="(select or type a new name)" required>
             <datalist id="networkNamesList">
                 <% networks.forEach(function(network) { %>
@@ -29,7 +29,7 @@
             <input class="form-control" type="date" name="date" value="<%= today %>">
         </div>
         <div>
-            <label>(optional)</label>
+            <label class="form-label">snapshot</label>
             <input class="form-control" type="file" name="image">
         </div>
         <div id="cta" >
