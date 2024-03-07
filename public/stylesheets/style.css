@@ -126,3 +126,7 @@ a {
 .mandatory {
   border-color: #00E5FF;
 }
+
+.text-secondary {
+  color: #00E5FF !important;
+}

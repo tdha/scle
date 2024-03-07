@@ -10,7 +10,7 @@
         <p style="color: #FF1744;"><%= errorMessage %></p>
     <% } %>
 
-<form id="new-network" action="/networks/<%= network._id %>?_method=PUT" method="POST">
+<form id="new-network" class="memoForm" action="/networks/<%= network._id %>?_method=PUT" method="POST">
     <div>
         <label class="form-label">Name</label>
         <input class="form-control" type="text" name="name" value="<%= network.name %>">
@@ -24,13 +24,24 @@
         <input class="form-control" type="text" name="phone" value="<%= network.phone %>">
     </div>
     <div id="cta">
-        <a href="/networks" class="btn btn-link">Cancel</a>
-        <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+        <div class="clearfix">
+            <a href="/networks" class="btn btn-link">Cancel</a>
+            <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+            <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     </div>
 </form>
 
     </div>
     </div>
 </div>
+
+<script>
+    document.querySelector('.memoForm').addEventListener('submit', function() {
+    document.getElementById('spinner').style.display = 'block';
+    });
+</script>
 
 <%- include('../partials/footer') %>

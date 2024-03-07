@@ -6,7 +6,7 @@
 
     <h2>NEW MEMO</h2>
 
-    <form action="/memos" enctype="multipart/form-data" method="POST">
+    <form action="/memos" enctype="multipart/form-data" method="POST" class="memoForm">
         <div>
             <label class="form-label">I met with*</label>
             <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="(select or type a new name)" required>
@@ -33,9 +33,14 @@
             <input class="form-control" type="file" name="image">
         </div>
         <div id="cta" >
-            <a href="/memos" class="btn btn-link" role="button">Cancel</a>
-            <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
-            <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+            <div class="clearfix">
+                <a href="/memos" class="btn btn-link" role="button">Cancel</a>
+                <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
+                <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+                <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
 
     </form>
@@ -44,4 +49,10 @@
     </div>
 </div>
 
+<script>
+    document.querySelector('.memoForm').addEventListener('submit', function() {
+        document.getElementById('spinner').style.display = 'block';
+    });
+</script>
+    
 <%- include('../partials/footer') %>

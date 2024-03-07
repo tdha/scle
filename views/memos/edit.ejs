@@ -6,7 +6,7 @@
 
     <h2>EDIT MEMO</h2>
 
-    <form id="new-memo" action="/memos/<%= memo._id %>?_method=PUT" method="POST">
+    <form id="new-memo" class="memoForm" action="/memos/<%= memo._id %>?_method=PUT" method="POST">
         <div>
             <label class="form-label">I met with</label>
             <p class="entry-details bold-name"><%= memo.network.name %></p>
@@ -24,13 +24,24 @@
             <input class="form-control" type="date" name="date" value="<%= memo.date.toISOString().slice(0, 10) %>">
         </div>
         <div id="cta">
-            <a href="/memos" class="btn btn-link" role="button">Cancel</a>
-            <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+            <div class="clearfix">
+                <a href="/memos" class="btn btn-link" role="button">Cancel</a>
+                <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+                <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
     </form>
 
     </div>
     </div>
 </div>
+
+<script>
+    document.querySelector('.memoForm').addEventListener('submit', function() {
+        document.getElementById('spinner').style.display = 'block';
+    });
+</script>
 
 <%- include('../partials/footer') %>
