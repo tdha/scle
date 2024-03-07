@@ -47,20 +47,23 @@
     </div>
 <% }); %>
 
-<script>
-    function confirmDelete() {
-        return confirm('Are you sure you want to delete?');
-    }
-</script>
-
-<nav aria-label="Page-navigation">
-    <ul class="pagination justify-content-center">
-        <% for(let i = 1; i <= totalPages; i++) { %>
-            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-                <a class="page-link" href="/networks/<%= n._id %>?page=<%= i %>"><%= i %></a>
-            </li>
-        <% } %>
-    </ul>
+<nav aria-label="Page-navigation" class="d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center">
+        <!-- Pagination Controls -->
+        <div>
+            <ul class="pagination mb-0">
+                <% for(let i = 1; i <= totalPages; i++) { %>
+                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                        <a class="page-link" href="/networks/<%= n._id %>?page=<%= i %>"><%= i %></a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <!-- Back to Top Button -->
+        <div class="ms-2">
+            <button onclick="scrollToTop()" class="btn btn-outline-secondary">Back to Top</button>
+        </div>
+    </div>
 </nav>
 
 
@@ -84,11 +87,23 @@
 </div>
 
 <script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete?');
+    }
+</script>
+
+<script>
     function showImageModal(src) {
       document.getElementById('modalImage').src = src;
       
       var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
       imageModal.show();
+    }
+</script>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 </script>
 

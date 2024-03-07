@@ -5,19 +5,36 @@ const cloudinary = require('../utilities/cloudinary');
 
 const index = async (req, res) => {
     try {
-        const networks = await Network.find({user: req.user._id}).populate('user').sort({ name: 1 }); 
+        const page = parseInt(req.query.page) || 1; 
+        const limit = parseInt(req.query.limit) || 12; 
+        const skip = (page - 1) * limit; 
+
+        const totalNetworks = await Network.countDocuments({user: req.user._id});
+        const totalPages = Math.ceil(totalNetworks / limit);
+
+        const networks = await Network.find({user: req.user._id})
+                                      .populate('user')
+                                      .sort({ name: 1 })
+                                      .skip(skip)
+                                      .limit(limit);
+        
         const networksWithPlaceholder = networks.map(network => {
             const modifiedNetwork = network.toObject();
             modifiedNetwork.image = modifiedNetwork.image || '/images/default-profile-image.png'; 
             return modifiedNetwork;
         });
 
-        res.render('networks/index', { networks: networksWithPlaceholder });
+        res.render('networks/index', { 
+            networks: networksWithPlaceholder,
+            currentPage: page,
+            totalPages
+        });
     } catch (err) {
         console.log(err);
         res.status(500).send("Error fetching networks");
     }
 };
+
 
 const show = async (req, res) => {
     try {
