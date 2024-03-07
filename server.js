@@ -6,7 +6,6 @@ const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const methodOverride = require('method-override');
-// const bootstrap = require('bootstrap');
 
 require('dotenv').config();
 require('./config/database');
@@ -29,11 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
-// app.use(bootstrap());
-// app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
-// logged in user is in a 'user' variable that's available inside all EJS templates.
-// if nobody is logged in, user will be undefined.
 app.use(session({
     secret: process.env.SECRET,
     resave: false,

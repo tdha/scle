@@ -18,7 +18,7 @@ const index = async (req, res) => {
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject();
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
-            formattedMemo.networkName = memo.network ? memo.network.name : 'No Network';
+            formattedMemo.networkName = memo.network ? memo.network.name : '/ removed contact /';
             return formattedMemo;
         });
 
