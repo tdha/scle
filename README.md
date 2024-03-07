@@ -41,3 +41,6 @@ This application works on Chrome Version 122.0.6261.111 (Official Build) (arm64)
 - Categorise and label contacts
 - Onboarding tooltips
 - Performance optimisation
+
+## Credits
+A big thank you to [Joel](https://github.com/wofockham) and [CJ](https://github.com/Bissmark). 
