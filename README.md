@@ -23,3 +23,21 @@ Recalling details from conversations can be hard. Let's fix [that](https://scle-
 
 ## Technologies
 
+- Node.js
+- Express
+- HTML
+- CSS
+- Heroku
+- Cloudinary
+- Google OAuth
+
+This application works on Chrome Version 122.0.6261.111 (Official Build) (arm64).
+
+## Roadmap
+
+- Full CRUD for images
+- Separate notes into 'things to remember for next time' vs 'things to remember'
+- Add action items to a memo
+- Categorise and label contacts
+- Onboarding tooltips
+- Performance optimisation
