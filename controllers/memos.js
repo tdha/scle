@@ -4,6 +4,7 @@ const Network = require('../models/network');
 
 const index = async (req, res) => {
     try {
+        // Pagination
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 24;
         const skip = (page - 1) * limit;
@@ -11,18 +12,20 @@ const index = async (req, res) => {
         const totalMemos = await Memo.countDocuments({user: req.user._id});
         const memos = await Memo.find({user: req.user._id})
                                 .populate('network')
-                                .sort({ createdAt: -1 })
+                                .sort({ createdAt: -1 }) // Sort by time created
                                 .skip(skip)
                                 .limit(limit);
+ 
+        // Pagination UI calcuation
+        const totalPages = Math.ceil(totalMemos / limit);
 
+        // Format date
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject();
             formattedMemo.formattedDate = memo.date ? memo.date.toLocaleDateString() : 'No Date';
-            formattedMemo.networkName = memo.network ? memo.network.name : '/ removed contact /';
+            formattedMemo.networkName = memo.network ? memo.network.name : '/ removed contact /'; // Deleted network (contacts)
             return formattedMemo;
         });
-
-        const totalPages = Math.ceil(totalMemos / limit);
 
         res.render('memos/index', {
             memos: formattedMemos,
@@ -40,7 +43,7 @@ const newMemo = async (req, res) => {
         const networks = await Network.find({user: req.user._id}).sort('name');
         const now = new Date();
         const timezoneOffset = now.getTimezoneOffset() * 60000;
-        const localISOTime = (new Date(now - timezoneOffset)).toISOString().split('T')[0];
+        const localISOTime = (new Date(now - timezoneOffset)).toISOString().split('T')[0]; // Convert to local time from UTC
         
         res.render('memos/new', { networks, today: localISOTime, errorMessage: '' });
     } catch (err) {
@@ -85,6 +88,7 @@ const create = async(req, res) => {
 
         await memo.save();
         res.redirect('/memos');
+
     } catch (err) {
         console.log(err);
         const networks = await Network.find({});
@@ -94,7 +98,6 @@ const create = async(req, res) => {
         res.render('memos/new', { errorMessage: err.message, today: localISOTime, networks });
     }
 };
-
 
 const editMemo = async(req, res) => {
     try {

@@ -6,43 +6,45 @@
 
     <h2>NEW CONTACT</h2>
 
-<% if (errorMessage) { %>
-    <p style="color: #FF1744;"><%= errorMessage %></p>
-<% } %>
+    <% if (errorMessage) { %>
+        <p style="color: #FF1744;"><%= errorMessage %></p>
+    <% } %>
 
-<form action="/networks" enctype="multipart/form-data" method="POST" class="memoForm">
-    <div>
-        <label class="form-label">Name*</label>
-        <input class="form-control" type="text" name="name" placeholder="name or nickname" required>
-    </div>
-    <div>
-        <label class="form-label">Email</label>
-        <input class="form-control" type="text" name="email" >
-    </div>
-    <div>
-        <label class="form-label">Phone</label>
-        <input class="form-control" type="text" name="phone" >
-    </div>
-    <div>
-        <label class="form-label">Profile photo</label>
-        <input class="form-control" type="file" name="image">
-    </div>
-    <div id="cta">
-        <div class="clearfix">
-            <a href="/networks" class="btn btn-link" role="button">Cancel</a>
-            <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
-            <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
-            <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
-                <span class="visually-hidden">Loading...</span>
+    <form action="/networks" enctype="multipart/form-data" method="POST" class="memoForm">
+        <div>
+            <label class="form-label">Name*</label>
+            <input class="form-control" type="text" name="name" placeholder="name or nickname" required>
+        </div>
+        <div>
+            <label class="form-label">Email</label>
+            <input class="form-control" type="text" name="email" >
+        </div>
+        <div>
+            <label class="form-label">Phone</label>
+            <input class="form-control" type="text" name="phone" >
+        </div>
+        <div>
+            <!-- Single image uploader -->
+            <label class="form-label">Profile photo</label>
+            <input class="form-control" type="file" name="image">
+        </div>
+        <div id="cta">
+            <div class="clearfix">
+                <a href="/networks" class="btn btn-link" role="button">Cancel</a>
+                <button class="btn btn-outline-secondary" type="reset" value="Clear">Clear</button>
+                <button class="btn btn-outline-primary" type="submit" value="Save memo">Save</button>
+                <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
     </div>
     </div>
 </div>
 
+<!-- Loading spinner -->
 <script>
     document.querySelector('.memoForm').addEventListener('submit', function() {
         document.getElementById('spinner').style.display = 'block';

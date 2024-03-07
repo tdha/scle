@@ -1,7 +1,9 @@
+// Contacts not used (requires Google Peoples API approval)
+
 const {google} = require('googleapis');
 const Contact = require('../models/contact');
 
-// fetch contacts
+// Fetch contacts
 async function fetchContacts(accessToken) {
   const oauth2Client = new google.auth.OAuth2();
   oauth2Client.setCredentials({access_token: accessToken});

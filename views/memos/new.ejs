@@ -10,6 +10,8 @@
         <div>
             <label class="form-label">I met with*</label>
             <input class="form-control" type="text" name="networkName" id="networkName" list="networkNamesList" placeholder="(select or type a new name)" required>
+            
+            <!-- TODO: Refactor datalist for more control over styling -->
             <datalist id="networkNamesList">
                 <% networks.forEach(function(network) { %>
                     <option value="<%= network.name %>"></option>
@@ -29,6 +31,7 @@
             <input class="form-control" type="date" name="date" value="<%= today %>">
         </div>
         <div>
+            <!-- Single image uploader -->
             <label class="form-label">snapshot</label>
             <input class="form-control" type="file" name="image">
         </div>
@@ -49,6 +52,7 @@
     </div>
 </div>
 
+<!-- Loading spinner -->
 <script>
     document.querySelector('.memoForm').addEventListener('submit', function() {
         document.getElementById('spinner').style.display = 'block';

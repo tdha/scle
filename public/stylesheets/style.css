@@ -26,6 +26,10 @@ div {
   padding-bottom: 20px;
 }
 
+a {
+  color: black;
+}
+
 #cta {
   padding-top: 20px;
 }
@@ -101,10 +105,6 @@ div {
 
 .memo-img {
   margin-top: 10px;
-}
-
-a {
-  color: black;
 }
 
 .iconButton {

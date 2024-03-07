@@ -1,13 +1,15 @@
+// Contacts not used (requires Google Peoples API approval)
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const contactSchema = new Schema({
     // userId: {
     //     type: Schema.Types.ObjectId,
-    //     ref: 'User', // user model for users who log into app
+    //     ref: 'User',
     //     required: true
     // },
-    googleContactId: { // identify the contact from Google's API
+    googleContactId: {
         type: String,
         required: true
     },
@@ -17,11 +19,11 @@ const contactSchema = new Schema({
     }],
     emailAddresses: [{
         value: String,
-        type: String // could be home, work, etc.
+        type: String
     }],
     phoneNumbers: [{
         value: String,
-        type: String // could be home, mobile, etc.
+        type: String
     }],
 }, {
     timestamps: true

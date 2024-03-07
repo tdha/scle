@@ -2,9 +2,9 @@ const Network = require('../models/network');
 const Memo = require('../models/memo');
 const cloudinary = require('../utilities/cloudinary');
 
-
 const index = async (req, res) => {
     try {
+        // Pagination
         const page = parseInt(req.query.page) || 1; 
         const limit = parseInt(req.query.limit) || 12; 
         const skip = (page - 1) * limit; 
@@ -14,7 +14,7 @@ const index = async (req, res) => {
 
         const networks = await Network.find({user: req.user._id})
                                       .populate('user')
-                                      .sort({ name: 1 })
+                                      .sort({ name: 1 }) // Sort alphabetically
                                       .skip(skip)
                                       .limit(limit);
         
@@ -29,15 +29,16 @@ const index = async (req, res) => {
             currentPage: page,
             totalPages
         });
+
     } catch (err) {
         console.log(err);
         res.status(500).send("Error fetching networks");
     }
 };
 
-
 const show = async (req, res) => {
     try {
+        // Pagination
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 12;
         const skip = (page - 1) * limit;
@@ -46,16 +47,16 @@ const show = async (req, res) => {
         const totalMemos = await Memo.countDocuments({ network: networkId });
         const memos = await Memo.find({ network: networkId })
                                 .populate('network', 'name')
-                                .sort({ createdAt: -1 })
+                                .sort({ createdAt: -1 }) // Sort latest to oldest by date created
                                 .skip(skip)
                                 .limit(limit);
+
+        const totalPages = Math.ceil(totalMemos / limit);
 
         const formattedMemos = memos.map(memo => ({
             ...memo.toObject(),
             formattedDate: memo.date ? memo.date.toLocaleDateString() : 'No Date',
         }));
-
-        const totalPages = Math.ceil(totalMemos / limit);
 
         res.render('networks/show', {
             n: await Network.findById(networkId),
@@ -96,12 +97,13 @@ const create = async(req, res) => {
 
         await network.save();
         res.redirect('/networks');
+
     } catch (err) {
+        // Database duplication
         let errorMessage = 'An error occurred';
         if (err.code === 11000) { 
             errorMessage = 'This name already exists.';
         } else if (err.name === 'ValidationError') {
-            // Get the first error message from the errors object
             const errorsKeys = Object.keys(err.errors);
             errorMessage = err.errors[errorsKeys[0]].message;
         } else {
@@ -134,7 +136,7 @@ const update = async(req, res) => {
         if (existingNetwork) {
             return res.render('networks/edit', {
                 network: updatedData,
-                errorMessage: 'This name already exists.',
+                errorMessage: 'This name already exists.', // Name is unique
                 id: id
             });
         }
@@ -152,7 +154,6 @@ const update = async(req, res) => {
         res.status(500).send("Error updating network");
     }
 };
-
 
 const deleteNetwork = async (req, res) => {
     try {

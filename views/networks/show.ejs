@@ -10,6 +10,8 @@
         <% } else { %>
             <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 64px; height: auto;">
         <% } %>
+
+        <!-- Back button to previous page using browser history -->
         <a href="#" class="btn btn-link" onclick="window.history.back(); return false;">Back</a>
     </section>
     
@@ -21,57 +23,59 @@
         </div>
     </section>
 
-<h5>Memos</h5>
-<hr class="network-divider">
+    <!-- TODO: Refactor this secondary navigation into tab UI  -->
+    <h5>Memos</h5>
+    <hr class="network-divider">
 
-<% memos.forEach(function(m) { %>
-    <div class="entry">
-        <p class="entry-details"><%= m.formattedDate %></p>
-        <p class="entry-details"><%= m.location %></p>
-        <p class="entry-details bold-name"><%= m.networkName %></p>
-        <p class="entry-details"><%= m.note %></p>
-        <% if (m.image && m.image !== 'defaultImageURLHere') { %>
-            <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="memo-img">
-        <% } %>
-        
-        <section class="entry-cta">
+    <!-- Same as memo/index but filtered for network ID -->
+    <% memos.forEach(function(m) { %>
+        <div class="entry">
+            <p class="entry-details"><%= m.formattedDate %></p>
+            <p class="entry-details"><%= m.location %></p>
+            <p class="entry-details bold-name"><%= m.networkName %></p>
+            <p class="entry-details"><%= m.note %></p>
+            <% if (m.image && m.image !== 'defaultImageURLHere') { %>
+                <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="memo-img">
+            <% } %>
+            
+            <section class="entry-cta">
                 <form action="/memos/<%= m._id %>/edit" method="GET">
                     <button type="submit" class=" btn entry-icon"><img src="/images/icon-edit.png" alt="edit"></button>
                 </form>
                 <form action="/memos/<%= m._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
                     <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
                 </form>
-        </section>
+            </section>
 
-        <hr class="memo-divider">
-    </div>
-<% }); %>
+            <hr class="memo-divider">
+        </div>
+    <% }); %>
 
-<nav aria-label="Page-navigation" class="d-flex justify-content-center align-items-center">
-    <div class="d-flex flex-row justify-content-center align-items-center">
-        <!-- Pagination Controls -->
-        <div>
-            <ul class="pagination mb-0">
-                <% for(let i = 1; i <= totalPages; i++) { %>
-                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-                        <a class="page-link" href="/networks/<%= n._id %>?page=<%= i %>"><%= i %></a>
-                    </li>
-                <% } %>
-            </ul>
+    <nav aria-label="Page-navigation" class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-row justify-content-center align-items-center">
+            <!-- Pagination UI -->
+            <div>
+                <ul class="pagination mb-0">
+                    <% for(let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" href="/networks/<%= n._id %>?page=<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+            <!-- Back to top -->
+            <div class="ms-2">
+                <button onclick="scrollToTop()" class="btn btn-outline-secondary">Back to Top</button>
+            </div>
         </div>
-        <!-- Back to Top Button -->
-        <div class="ms-2">
-            <button onclick="scrollToTop()" class="btn btn-outline-secondary">Back to Top</button>
-        </div>
-    </div>
-</nav>
+    </nav>
 
 
     </div>
     </div>
 </div>
 
-<!-- Bootstrap image modal -->
+<!-- Bootstrap image modal UI -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -86,21 +90,24 @@
     </div>
 </div>
 
+<!-- Bootstrap image modal -->
+<script>
+    function showImageModal(src) {
+        document.getElementById('modalImage').src = src;
+        
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+    }
+</script>
+
+<!-- Delete confirmation modal -->
 <script>
     function confirmDelete() {
         return confirm('Are you sure you want to delete?');
     }
 </script>
 
-<script>
-    function showImageModal(src) {
-      document.getElementById('modalImage').src = src;
-      
-      var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-      imageModal.show();
-    }
-</script>
-
+<!-- Loading spinner -->
 <script>
     function scrollToTop() {
         window.scrollTo({top: 0, behavior: 'smooth'});

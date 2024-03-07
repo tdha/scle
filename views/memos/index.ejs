@@ -31,7 +31,8 @@
 
         <nav aria-label="Page-navigation" class="d-flex justify-content-center align-items-center">
             <div class="d-flex flex-row justify-content-center align-items-center">
-                <!-- Pagination Controls -->
+
+                <!-- Pagination UI -->
                 <div>
                     <ul class="pagination mb-0">
                         <% for(let i = 1; i <= totalPages; i++) { %>
@@ -41,6 +42,7 @@
                         <% } %>
                     </ul>
                 </div>
+
                 <!-- Back to Top Button -->
                 <div class="ms-2">
                     <button onclick="scrollToTop()" class="btn btn-outline-secondary">Back to Top</button>
@@ -48,13 +50,11 @@
             </div>
         </nav>
         
-        
-
     </div>
     </div>
 </div>
 
-<!-- Bootstrap image modal -->
+<!-- Bootstrap image modal UI-->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -69,6 +69,7 @@
     </div>
 </div>
 
+<!-- Bootstrap image modal -->
 <script>
     function showImageModal(src) {
       document.getElementById('modalImage').src = src;
@@ -78,18 +79,18 @@
     }
 </script>
 
+<!-- Delete confirmation modal -->
 <script>
     function confirmDelete() {
         return confirm('Are you sure you want to delete?');
     }
 </script>
 
+<!-- Loading spinner -->
 <script>
     function scrollToTop() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 </script>
-
-
 
 <%- include('../partials/footer') %>

@@ -1,3 +1,5 @@
+// Contacts not used (requires Google Peoples API approval)
+
 const express = require('express');
 const router = express.Router();
 const contactsController = require('../controllers/contacts');
