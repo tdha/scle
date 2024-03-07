@@ -10,7 +10,7 @@
         <div class="entry">
             <p class="entry-details"><%= m.formattedDate %></p>
             <p class="entry-details"><%= m.location %></p>
-            <a href="/networks/<%= m.network._id %>"><p class="entry-details bold-name"><%= m.networkName %></p></a>
+            <a href="<%= m.network ? `/networks/${m.network._id}` : '#' %>"><p class="entry-details bold-name"><%= m.networkName %></p></a>
             <p class="entry-details"><%= m.note %></p>
             <% if (m.image && m.image !== 'defaultImageURLHere') { %>
                 <img src="<%= m.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="memo-img">
