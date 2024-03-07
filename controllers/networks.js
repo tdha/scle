@@ -19,34 +19,19 @@ const index = async (req, res) => {
     }
 };
 
-// const show = async (req, res) => {
-//     try {
-//         const network = await Network.findById(req.params.id).populate('user').sort({ date: -1});
-//         const memos = await Memo.find({ network: network._id }).populate('network', 'name');
-        
-//         const formattedMemos = memos.map(memo => ({
-//             ...memo.toObject(),
-//             formattedDate: memo.date ? memo.date.toLocaleDateString() : 'No Date',
-//         }));
-
-//         res.render('networks/show', { n: network, memos: formattedMemos });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Error fetching network details");
-//     }
-// };
 const show = async (req, res) => {
     try {
-        const { page = 1, limit = 12 } = req.query; // Default page and limit
-        const networkId = req.params.id;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 12;
+        const skip = (page - 1) * limit;
 
-        const network = await Network.findById(networkId);
+        const networkId = req.params.id;
         const totalMemos = await Memo.countDocuments({ network: networkId });
         const memos = await Memo.find({ network: networkId })
                                 .populate('network', 'name')
                                 .sort({ createdAt: -1 })
-                                .skip((page - 1) * limit)
-                                .limit(parseInt(limit));
+                                .skip(skip)
+                                .limit(limit);
 
         const formattedMemos = memos.map(memo => ({
             ...memo.toObject(),
@@ -56,9 +41,9 @@ const show = async (req, res) => {
         const totalPages = Math.ceil(totalMemos / limit);
 
         res.render('networks/show', {
-            n: network,
+            n: await Network.findById(networkId),
             memos: formattedMemos,
-            currentPage: parseInt(page),
+            currentPage: page,
             totalPages
         });
     } catch (error) {
@@ -66,7 +51,6 @@ const show = async (req, res) => {
         res.status(500).send("Error fetching network details");
     }
 };
-
 
 const newNetwork = (req, res) => {
     res.render('networks/new', {title: 'New Network', errorMessage: ''});

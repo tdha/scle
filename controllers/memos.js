@@ -2,20 +2,18 @@ const Memo = require('../models/memo');
 const cloudinary = require('../utilities/cloudinary');
 const Network = require('../models/network');
 
-const index = async(req, res) => {
+const index = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 24;
         const skip = (page - 1) * limit;
 
+        const totalMemos = await Memo.countDocuments({user: req.user._id});
         const memos = await Memo.find({user: req.user._id})
                                 .populate('network')
                                 .sort({ createdAt: -1 })
                                 .skip(skip)
                                 .limit(limit);
-
-        const totalMemos = await Memo.countDocuments({user: req.user._id});
-        const totalPages = Math.ceil(totalMemos / limit);
 
         const formattedMemos = memos.map(memo => {
             const formattedMemo = memo.toObject();
@@ -24,10 +22,15 @@ const index = async(req, res) => {
             return formattedMemo;
         });
 
-        // Pass totalPages to the view for pagination controls
-        res.render('memos/index', { memos: formattedMemos, page, totalPages });
+        const totalPages = Math.ceil(totalMemos / limit);
+
+        res.render('memos/index', {
+            memos: formattedMemos,
+            currentPage: page,
+            totalPages
+        });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).send("Error fetching memos");
     }
 };
