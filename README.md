@@ -14,6 +14,9 @@ Recalling details from conversations can be hard. Let's fix that.
 
 ## Features
 
+Version 1.0
+2024.03.08
+
 - Memo template to record who, where, when, and what (key conversation details)
 - Ability to attach an image to a memo
 - Simplified contacts directory with name, email, and phone number
