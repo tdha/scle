@@ -18,5 +18,8 @@ Recalling details from conversations can be hard. Let's fix [that](https://scle-
 - View all memos by a specific contact
 - Sign in with Google
 
+## Screenshot
+![Key screens](https://i.imgur.com/cfViF5r.jpg)
+
 ## Technologies
 
