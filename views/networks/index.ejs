@@ -2,36 +2,38 @@
 
 <div class="container">
     <div class="row">
-    <div class="offset-md-3 col-md-6 ps-0 pe-0">
+    <div class="offset-lg-3 col-lg-6 ps-0 pe-0">
 
         <h2>CONTACTS</h2>
-
         <% networks.forEach(function(n) { %>
-            <div class="float-start me-3">
-                <% if (n.image && n.image !== 'defaultImageURLHere') { %>
-                    <img src="<%= n.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="img-fluid img-profile">
-                <% } %>
+            <div class="hstack gap-4 entry" id="divContact">
+                    <div class="d-flex flex-column align-items-center text-center" id="divContact">
+                            <% if (n.image && n.image !== 'defaultImageURLHere') { %>
+                                <img src="<%= n.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="img-fluid img-profile">
+                                <% } %>
+                    </div>
+                    <div class="" id="divContact">
+                        <a href="/networks/<%= n._id %>"><p class="entry-details"><%= n.name %></p></a> 
+                        <p class="entry-details"><%= n.email ? n.email : '@' %></p>
+                        <p class="entry-details"><%= n.phone ? n.phone : '#' %></p>
+                        
+                        <!-- Edit and delete controls -->
+                        <section class="entry-cta d-flex flex-column align-items-end">
+                            <section class="hstack">
+                                <form action="/networks/<%= n._id %>/edit" method="GET">
+                                    <button class="btn entry-icon" type="submit"><img src="/images/icon-edit.png" alt="edit"></button>
+                                </form>
+                                <form action="/networks/<%= n._id %>/edit-image" method="GET">
+                                    <button class="btn entry-icon" type="submit"><img src="/images/icon-image.png" alt="edit"></button>
+                                </form>
+                            </section>
+                            <form action="/networks/<%= n._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
+                                <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
+                            </form>
+                        </section>
+                    </div>
             </div>
-
-            <div>
-                <div class="entry">
-                    <a href="/networks/<%= n._id %>"><p class="entry-details"><%= n.name %></p></a> 
-                    <p class="entry-details"><%= n.email ? n.email : '@' %></p>
-                    <p class="entry-details"><%= n.phone ? n.phone : '#' %></p>
-        
-                <!-- Edit and delete controls -->
-                <section class="entry-cta">
-                    <form action="/networks/<%= n._id %>/edit" method="GET">
-                        <button class="btn entry-icon" type="submit"><img src="/images/icon-edit.png" alt="edit"></button>
-                    </form>
-                    <form action="/networks/<%= n._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
-                        <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
-                    </form>
-                </section>
-
-                <hr class="memo-divider-network">
-            </div>
-        </div>
+            <hr class="contact-divider">
         <% }); %>
 
         <!-- Pagination -->

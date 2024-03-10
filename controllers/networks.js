@@ -126,6 +126,16 @@ const editNetwork = async(req, res) => {
     }
 }
 
+const editImage = async (req, res) => {
+    try {
+      const network = await Network.findById(req.params.id);
+      res.render('networks/edit-image', { network });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error displaying image edit page.");
+    }
+  };  
+
 const update = async(req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
@@ -148,12 +158,38 @@ const update = async(req, res) => {
         }
 
         await Network.findByIdAndUpdate(id, updatedData);
-        res.redirect('/networks');
+        res.redirect(`/networks/${id}`);
     } catch (err) {
         console.error(err);
         res.status(500).send("Error updating network");
     }
 };
+
+const updateImage = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const network = await Network.findById(id);
+  
+      // Delete old image from Cloudinary, if it exists
+      if (network.cloudinary_id) {
+        await cloudinary.uploader.destroy(network.cloudinary_id);
+      }
+  
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
+  
+      // Update the network (contact) with the new image URL and cloudinary_id
+      await Network.findByIdAndUpdate(id, { 
+        image: result.secure_url, 
+        cloudinary_id: result.public_id 
+      });
+  
+      res.redirect(`/networks/${id}`);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error updating image.");
+    }
+  };  
 
 const deleteNetwork = async (req, res) => {
     try {
@@ -175,6 +211,8 @@ module.exports = {
     new: newNetwork,
     create,
     edit: editNetwork,
+    editImage,
     update,
+    updateImage,
     delete: deleteNetwork
 }

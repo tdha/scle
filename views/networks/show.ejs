@@ -6,21 +6,36 @@
 
     <section class="d-flex justify-content-between align-items-start">
         <% if (n.image && n.image !== 'defaultImageURLHere') { %>
-            <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" class="img-fluid img-profileShow">
+            <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" class="img-fluid img-profileShow" onclick="showImageModal(this.src);">
         <% } else { %>
-            <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 64px; height: auto;">
+            <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 72px; height: auto; margin-bottom: 20px;">
         <% } %>
 
         <!-- Back button to previous page using browser history -->
-        <a href="#" class="btn btn-link" onclick="window.history.back(); return false;">Back</a>
+        <!-- <a href="#" class="btn btn-link" onclick="window.history.back(); return false;">Back</a> -->
     </section>
     
-    <section>
-        <h2 class="me-3" id="profileTitle"><%= n.name %></h2>
-        <div class="entry">
-            <p class="entry-details"><%= n.email ? n.email : '@' %></p>
-            <p class="entry-details"><%= n.phone ? n.phone : '#' %></p>
-        </div>
+    <section class="entry">
+        <section>
+            <h2 class="me-3" id="profileTitle"><%= n.name %></h2>
+            <div class="entry">
+                <p class="entry-details"><%= n.email ? n.email : '@' %></p>
+                <p class="entry-details"><%= n.phone ? n.phone : '#' %></p>
+            </div>
+        </section>
+        <section class="entry-cta d-flex flex-column align-items-end">
+            <section class="hstack">
+                <form action="/networks/<%= n._id %>/edit" method="GET">
+                    <button class="btn entry-icon" type="submit"><img src="/images/icon-edit.png" alt="edit"></button>
+                </form>
+                <form action="/networks/<%= n._id %>/edit-image" method="GET">
+                    <button class="btn entry-icon" type="submit"><img src="/images/icon-image.png" alt="edit"></button>
+                </form>
+            </section>
+            <form action="/networks/<%= n._id %>?_method=DELETE" method="POST" onsubmit="return confirmDelete()">
+                <button class="btn entry-icon" type="submit"><img src="/images/icon-close.png" alt="delete"></button>
+            </form>
+        </section>
     </section>
 
     <!-- TODO: Refactor this secondary navigation into tab UI  -->

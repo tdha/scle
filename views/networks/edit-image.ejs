@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <div class="row">
+    <div class="offset-md-3 col-md-6 ps-0 pe-0">
+
+    <h2>EDIT PROFILE IMAGE</h2>
+
+    <form action="/networks/<%= network._id %>/update-image" method="POST" enctype="multipart/form-data" class="memoForm">
+        <div>
+        <!-- Single image uploader -->
+        <label class="form-label">Select image to upload</label>
+        <input class="form-control" type="file" name="image">
+    </div>
+    <div id="cta">
+        <div class="clearfix">
+            <a href="/networks" class="btn btn-link">Cancel</a>
+            <button class="btn btn-outline-primary" type="submit" value="Save memo">Update</button>
+            <div class="spinner-border text-secondary float-end mt-1" role="status" id="spinner" style="display: none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</form>
+
+    </div>
+    </div>
+</div>
+
+<!-- Loading spinner -->
+<script>
+    document.querySelector('.memoForm').addEventListener('submit', function() {
+    document.getElementById('spinner').style.display = 'block';
+    });
+</script>
+
+<%- include('../partials/footer') %>

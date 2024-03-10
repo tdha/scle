@@ -76,6 +76,11 @@ a {
   margin-bottom: 28px;
 }
 
+.contact-divider {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
 .network-divider {
   margin-top: 6px;
   margin-bottom: 48px;
@@ -158,6 +163,17 @@ a {
 
 .page-link {
   color: #AA00FF;
+}
+
+#smCaps {
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 16px;
+}
+
+#divContact {
+  padding-bottom: 0px;
 }
 
 @media (max-width: 767px) {
