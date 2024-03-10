@@ -191,17 +191,37 @@ const updateImage = async (req, res) => {
     }
   };  
 
+// const deleteNetwork = async (req, res) => {
+//     try {
+//         const network = await Network.findById(req.params.id);
+//         if (network.cloudinary_id) {
+//             await cloudinary.uploader.destroy(network.cloudinary_id);
+//         }
+//         await Network.findByIdAndDelete(req.params.id);
+//         res.redirect('/networks');
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send("Error deleting memo");
+//     }
+// };
 const deleteNetwork = async (req, res) => {
     try {
-        const network = await Network.findById(req.params.id);
+        const networkId = req.params.id;
+
+        // Delete all memos related to this network
+        await Memo.deleteMany({ network: networkId });
+
+        // Now delete the network
+        const network = await Network.findById(networkId);
         if (network.cloudinary_id) {
             await cloudinary.uploader.destroy(network.cloudinary_id);
         }
-        await Network.findByIdAndDelete(req.params.id);
+        await Network.findByIdAndDelete(networkId);
+
         res.redirect('/networks');
     } catch (err) {
         console.log(err);
-        res.status(500).send("Error deleting memo");
+        res.status(500).send("Error deleting network and its memos");
     }
 };
 
