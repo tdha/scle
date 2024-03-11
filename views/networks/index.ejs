@@ -9,8 +9,10 @@
             <div class="hstack gap-4 entry" id="divContact">
                     <div class="d-flex flex-column align-items-center text-center" id="divContact">
                             <% if (n.image && n.image !== 'defaultImageURLHere') { %>
-                                <img src="<%= n.image %>" alt="uploaded image" onclick="showImageModal(this.src);" loading="lazy" class="img-fluid img-profile">
-                                <% } %>
+                                <img src="<%= n.image %>" alt="<%= n.name %>'s profile image" class="img-fluid img-profile" onclick="showImageModal(this.src);">
+                            <% } else { %>
+                                <img src="/images/default-profile-image.png" alt="Default Profile Image" style="max-width: 48px; height: auto;">
+                            <% } %>
                     </div>
                     <div class="" id="divContact">
                         <a href="/networks/<%= n._id %>"><p class="entry-details"><%= n.name %></p></a> 
